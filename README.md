@@ -25,6 +25,43 @@ cd bappacreate
 go install
 ```
 
+### After Installation
+
+After installing with `go install`, make sure the Go bin directory is in your PATH:
+
+1. Find your Go binary path:
+
+   ```bash
+   go env GOPATH
+   ```
+
+2. Add the Go bin directory to your PATH:
+
+   For bash (add to ~/.bashrc):
+
+   ```bash
+   export PATH="$PATH:$(go env GOPATH)/bin"
+   ```
+
+   For zsh (add to ~/.zshrc):
+
+   ```bash
+   export PATH="$PATH:$(go env GOPATH)/bin"
+   ```
+
+   Then reload your shell configuration:
+
+   ```bash
+   source ~/.bashrc   # For bash
+   source ~/.zshrc    # For zsh
+   ```
+
+3. Verify the installation:
+
+   ```bash
+   bappacreate --help
+   ```
+
 ## Usage
 
 ```bash
