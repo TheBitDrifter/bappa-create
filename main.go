@@ -44,11 +44,11 @@ func main() {
 func printUsage() {
 	fmt.Println("Bappa Game Template Generator")
 	fmt.Println("===============================")
-	fmt.Println("Usage: bappa-create username/project-name [--template <template-name>]")
+	fmt.Println("Usage: bappacreate username/project-name [--template <template-name>]")
 	fmt.Println()
 	fmt.Println("This tool creates a new Bappa game project with the specified name.")
 	fmt.Println("The username/ prefix is used to create the proper Go module path.")
-	fmt.Println("Example: bappa-create johndoe/my-awesome-game --template platformer")
+	fmt.Println("Example: bappacreate johndoe/my-awesome-game --template platformer")
 	fmt.Println()
 	fmt.Println("Available templates:")
 	fmt.Println("  platformer      - A simple platformer game")

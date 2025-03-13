@@ -11,15 +11,15 @@ Bappa Game Template Generator helps you quickly bootstrap new game projects usin
 ### Option 1: Install with Go (Recommended)
 
 ```bash
-go install github.com/TheBitDrifter/bappa-create@latest
+go install github.com/TheBitDrifter/bappacreate@latest
 ```
 
 ### Option 2: Install from source
 
 ```bash
 # Clone the repository
-git clone https://github.com/TheBitDrifter/bappa-create.git
-cd bappa-create
+git clone https://github.com/TheBitDrifter/bappacreate.git
+cd bappacreate
 
 # Build and install the binary
 go install
@@ -28,7 +28,7 @@ go install
 ## Usage
 
 ```bash
-bappa-create username/project-name [--template <template-name>]
+bappacreate username/project-name [--template <template-name>]
 ```
 
 The `username/` prefix is important as it will be used to create the proper Go module path (`github.com/username/project-name`).
@@ -38,19 +38,19 @@ The `username/` prefix is important as it will be used to create the proper Go m
 Create a top-down game (default template):
 
 ```bash
-bappa-create johndoe/my-awesome-game
+bappacreate johndoe/my-awesome-game
 ```
 
 Create a platformer game:
 
 ```bash
-bappa-create johndoe/my-platformer --template platformer
+bappacreate johndoe/my-platformer --template platformer
 ```
 
 Create a sandbox game:
 
 ```bash
-bappa-create johndoe/my-sandbox-world --template sandbox
+bappacreate johndoe/my-sandbox-world --template sandbox
 ```
 
 ## Available Templates
