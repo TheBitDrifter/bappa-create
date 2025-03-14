@@ -15,7 +15,7 @@ type PlayerMovementSystem struct{}
 func (sys PlayerMovementSystem) Run(scene blueprint.Scene, dt float64) error {
 	// Get all entities with input buffers (players)
 	cursor := scene.NewCursor(blueprint.Queries.InputBuffer)
-	for cursor.Next() {
+	for range cursor.Next() {
 		incomingInputs := blueprintinput.Components.InputBuffer.GetFromCursor(cursor)
 		pos := blueprintspatial.Components.Position.GetFromCursor(cursor)
 		direction := blueprintspatial.Components.Direction.GetFromCursor(cursor)

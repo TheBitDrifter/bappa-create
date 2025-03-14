@@ -40,7 +40,7 @@ func main() {
 	// Settings
 	client.SetTitle("Topdown Template Split Screen")
 	client.SetResizable(true)
-	client.SetMinimumLoadTime(8)
+	client.SetMinimumLoadTime(30)
 	client.SetCameraBorderSize(5)
 
 	// Register scene one

@@ -26,7 +26,7 @@ func NewPlayers(sto warehouse.Storage, count int) error {
 			sheetPath = "characters/box_man_sheet_alt.png"
 		}
 		err = playerArchetype.Generate(1,
-			blueprintspatial.NewPosition(180, 180),
+			blueprintspatial.NewPosition(float64(100*i), 180),
 			blueprintspatial.NewRectangle(18, 58),
 			blueprintmotion.NewDynamics(10),
 			blueprintspatial.NewDirectionRight(),
@@ -37,7 +37,8 @@ func NewPlayers(sto warehouse.Storage, count int) error {
 				WithAnimations(animations.IdleAnimation, animations.RunAnimation, animations.FallAnimation, animations.JumpAnimation).
 				SetActiveAnimation(animations.IdleAnimation).
 				WithOffset(vector.Two{X: -72, Y: -59}).
-				WithPriority(10),
+				WithPriority(10).
+				WithCustomRenderer(),
 			blueprintclient.NewSoundBundle().
 				AddSoundFromConfig(sounds.Run).
 				AddSoundFromConfig(sounds.Jump).

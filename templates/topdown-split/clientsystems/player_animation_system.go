@@ -16,7 +16,7 @@ func (PlayerAnimationSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene)
 
 	// Iterate through players
 	cursor := scene.NewCursor(blueprint.Queries.InputBuffer)
-	for cursor.Next() {
+	for range cursor.Next() {
 		// Get components
 		direction8 := components.DirectionEightComponent.GetFromCursor(cursor)
 		bundle := blueprintclient.Components.SpriteBundle.GetFromCursor(cursor)

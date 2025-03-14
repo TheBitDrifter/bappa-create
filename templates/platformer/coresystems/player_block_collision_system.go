@@ -19,9 +19,9 @@ func (s PlayerBlockCollisionSystem) Run(scene blueprint.Scene, dt float64) error
 	playerCursor := scene.NewCursor(blueprint.Queries.InputBuffer)
 
 	// Outer loop is blocks
-	for blockTerrainCursor.Next() {
+	for range blockTerrainCursor.Next() {
 		// Inner is players
-		for playerCursor.Next() {
+		for range playerCursor.Next() {
 			// Delegate to helper
 			err := s.resolve(scene, blockTerrainCursor, playerCursor) // Now pass in the scene
 			if err != nil {

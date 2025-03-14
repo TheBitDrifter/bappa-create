@@ -39,14 +39,14 @@ func (CollisionPlayerTransferSystem) Run(cli coldbrew.LocalClient, scene coldbre
 	playerWithShapeCursor := scene.NewCursor(playerWithShapeQuery)
 
 	// Iterate through pairs (outer loop)
-	for collisionTransferCursor.Next() {
+	for range collisionTransferCursor.Next() {
 
 		// Get pos and collider/shape
 		transferPos := blueprintspatial.Components.Position.GetFromCursor(collisionTransferCursor)
 		transferCollider := blueprintspatial.Components.Shape.GetFromCursor(collisionTransferCursor)
 
 		// Inner loop
-		for playerWithShapeCursor.Next() {
+		for range playerWithShapeCursor.Next() {
 
 			// Get pos and collider/shape
 			playerPos := blueprintspatial.Components.Position.GetFromCursor(playerWithShapeCursor)

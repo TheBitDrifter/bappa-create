@@ -24,7 +24,7 @@ func (CameraFollowerSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene) 
 
 	// Iterate
 	playerCursor := scene.NewCursor(playersWithCamera)
-	for playerCursor.Next() {
+	for range playerCursor.Next() {
 
 		// Get the players position
 		playerPos := blueprintspatial.Components.Position.GetFromCursor(playerCursor)

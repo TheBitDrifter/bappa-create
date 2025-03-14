@@ -16,7 +16,7 @@ type PlayerAnimationSystem struct{}
 func (PlayerAnimationSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene) error {
 	cursor := scene.NewCursor(blueprint.Queries.InputBuffer)
 
-	for cursor.Next() {
+	for range cursor.Next() {
 		// Get state
 		bundle := blueprintclient.Components.SpriteBundle.GetFromCursor(cursor)
 		spriteBlueprint := &bundle.Blueprints[0]

@@ -24,7 +24,7 @@ func (sys PlayerSoundSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene)
 	cursor := scene.NewCursor(playersMovingWithSounds)
 
 	// Iterate
-	for cursor.Next() {
+	for range cursor.Next() {
 		soundBundle := blueprintclient.Components.SoundBundle.GetFromCursor(cursor)
 
 		// Get the sound from the bundle

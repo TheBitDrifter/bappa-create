@@ -19,7 +19,7 @@ func (OnGroundClearingSystem) Run(scene blueprint.Scene, dt float64) error {
 	onGroundCursor := scene.NewCursor(onGroundQuery)
 
 	// Iterate through matched entities
-	for onGroundCursor.Next() {
+	for range onGroundCursor.Next() {
 		// Get the onGround component state
 		onGround := components.OnGroundComponent.GetFromCursor(onGroundCursor)
 

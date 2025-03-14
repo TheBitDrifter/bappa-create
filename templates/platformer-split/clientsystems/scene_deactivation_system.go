@@ -12,7 +12,7 @@ type SceneDeactivationSystem struct{}
 // Watch out for this disabling scenes that are UI based only
 // You may need to handle that (add a player or modify the check)!
 func (SceneDeactivationSystem) Run(cli coldbrew.Client) error {
-	for _, scene := range cli.ActiveScenes() {
+	for scene := range cli.ActiveScenes() {
 		cursor := warehouse.Factory.NewCursor(blueprint.Queries.InputBuffer, scene.Storage())
 		hasPlayers := cursor.TotalMatched() > 0
 		if !hasPlayers {

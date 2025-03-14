@@ -23,7 +23,7 @@ func (SortVerticalSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene) er
 	cursor := scene.NewCursor(query)
 
 	// Iterate
-	for cursor.Next() {
+	for range cursor.Next() {
 		// Get the position and sprite bundle
 		pos := blueprintspatial.Components.Position.GetFromCursor(cursor)
 		bundle := blueprintclient.Components.SpriteBundle.GetFromCursor(cursor)

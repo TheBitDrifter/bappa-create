@@ -40,7 +40,7 @@ func main() {
 	// Settings
 	client.SetTitle("Topdown Template")
 	client.SetResizable(true)
-	client.SetMinimumLoadTime(8)
+	client.SetMinimumLoadTime(30)
 
 	// Register scene one
 	err := client.RegisterScene(

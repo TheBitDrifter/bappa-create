@@ -16,7 +16,7 @@ type GravitySystem struct{}
 func (GravitySystem) Run(scene blueprint.Scene, dt float64) error {
 	// Iterate through entities with dynamics components(physics)
 	cursor := scene.NewCursor(blueprint.Queries.Dynamics)
-	for cursor.Next() {
+	for range cursor.Next() {
 		// Get the dynamics
 		dyn := blueprintmotion.Components.Dynamics.GetFromCursor(cursor)
 

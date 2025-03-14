@@ -18,7 +18,7 @@ func (IgnorePlatformClearingSystem) Run(scene blueprint.Scene, dt float64) error
 	const expirationTicks = 15
 
 	// Iterate through matched entities
-	for ignorePlatformCursor.Next() {
+	for range ignorePlatformCursor.Next() {
 
 		// Get the IgnorePlatform component state
 		ignorePlatform := components.IgnorePlatformComponent.GetFromCursor(ignorePlatformCursor)

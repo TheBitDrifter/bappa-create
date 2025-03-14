@@ -41,9 +41,9 @@ func (s *PlayerPlatformCollisionSystem) Run(scene blueprint.Scene, dt float64) e
 	playerCursor := scene.NewCursor(blueprint.Queries.InputBuffer)
 
 	// Outer loop is platforms
-	for platformCursor.Next() {
+	for range platformCursor.Next() {
 		// Inner is players
-		for playerCursor.Next() {
+		for range playerCursor.Next() {
 			// Delegate to helper
 			err := s.resolve(scene, platformCursor, playerCursor)
 			if err != nil {

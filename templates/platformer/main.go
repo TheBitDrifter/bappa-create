@@ -40,7 +40,7 @@ func main() {
 	// Settings
 	client.SetTitle("Platformer Template")
 	client.SetResizable(true)
-	client.SetMinimumLoadTime(8)
+	client.SetMinimumLoadTime(30)
 
 	// Register scene One
 	err := client.RegisterScene(
