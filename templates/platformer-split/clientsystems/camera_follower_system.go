@@ -23,56 +23,67 @@ func (CameraFollowerSystem) Run(cli coldbrew.LocalClient, scene coldbrew.Scene) 
 	)
 	// Iterate
 	playerCursor := scene.NewCursor(playersWithCamera)
-
 	for range playerCursor.Next() {
-
 		// Get the players position
 		playerPos := blueprintspatial.Components.Position.GetFromCursor(playerCursor)
-
 		// Get the players camera
 		camIndex := int(*blueprintclient.Components.CameraIndex.GetFromCursor(playerCursor))
 		cam := cli.Cameras()[camIndex]
-
 		// Get the cameras local scene position
 		_, cameraScenePosition := cam.Positions()
 		centerX := float64(cam.Surface().Bounds().Dx()) / 2
 		centerY := float64(cam.Surface().Bounds().Dy()) / 2
 
-		// Get target position (player) and adjust for centering
-		targetX := playerPos.X - centerX
-		targetY := playerPos.Y - centerY
+		// The key change: calculate the centered positions for BOTH player and camera
+		// for proper deadzone comparison
+		centeredPlayerX := playerPos.X
+		centeredPlayerY := playerPos.Y
+		centeredCameraX := cameraScenePosition.X + centerX
+		centeredCameraY := cameraScenePosition.Y + centerY
+
+		// Calculate distance between camera center and player position
+		diffX := centeredPlayerX - centeredCameraX
+		diffY := centeredPlayerY - centeredCameraY
 
 		// Apply deadzone - camera only moves when player is outside of deadzone
-		deadzoneX := 20.0 // horizontal deadzone in pixels
-		deadzoneY := 20.0 // vertical deadzone in pixels
+		deadzoneX := 60.0 // horizontal deadzone in pixels
+		deadzoneY := 60.0 // vertical deadzone in pixels
 
-		// Calculate distance between camera and target
-		diffX := targetX - cameraScenePosition.X
-		diffY := targetY - cameraScenePosition.Y
+		// Target position starts at current camera position
+		targetX := cameraScenePosition.X
+		targetY := cameraScenePosition.Y
 
 		// Only move camera if player outside deadzone
-		if math.Abs(diffX) <= deadzoneX {
-			targetX = cameraScenePosition.X // Keep camera at current X if within X deadzone
-		}
-		if math.Abs(diffY) <= deadzoneY {
-			targetY = cameraScenePosition.Y // Keep camera at current Y if within Y deadzone
+		if math.Abs(diffX) > deadzoneX {
+			// Adjust target position to keep player at edge of deadzone
+			if diffX > 0 {
+				targetX = centeredPlayerX - centerX - deadzoneX
+			} else {
+				targetX = centeredPlayerX - centerX + deadzoneX
+			}
 		}
 
-		// Set the camera position towards the matched player position with floating point lerp
-		smoothness := 0.02
-		smoothX, smoothY := lerpVec(
-			cameraScenePosition.X, cameraScenePosition.Y, targetX, targetY, smoothness,
-		)
-		// Apply pixel snapping only at the end - adjust pixelSnap value to control precision
-		// 1.0 = full pixel snapping, 0.5 = half-pixel precision, 0.25 = quarter-pixel precision
-		pixelSnap := 0.25
-		cameraScenePosition.X = math.Round(smoothX/pixelSnap) * pixelSnap
-		cameraScenePosition.Y = math.Round(smoothY/pixelSnap) * pixelSnap
+		if math.Abs(diffY) > deadzoneY {
+			// Adjust target position to keep player at edge of deadzone
+			if diffY > 0 {
+				targetY = centeredPlayerY - centerY - deadzoneY
+			} else {
+				targetY = centeredPlayerY - centerY + deadzoneY
+			}
+		}
+
+		// Apply smooth lerping to camera movement
+		cameraScenePosition.X = lerp(cameraScenePosition.X, targetX, 0.02)
+		cameraScenePosition.Y = lerp(cameraScenePosition.Y, targetY, 0.04)
 
 		// Lock the camera to the scene boundaries
 		lockCameraToSceneBoundaries(cam, scene, cameraScenePosition)
 	}
 	return nil
+}
+
+func lerp(a, b, t float64) float64 {
+	return a + t*(b-a)
 }
 
 // lockCameraToSceneBoundaries constrains camera position within scene boundaries
@@ -97,11 +108,4 @@ func lockCameraToSceneBoundaries(cam coldbrew.Camera, scene coldbrew.Scene, came
 	if cameraPos.Y < 0 {
 		cameraPos.Y = 0
 	}
-}
-
-// Lerp func for smoothish camera movement
-func lerpVec(startX, startY, endX, endY, t float64) (float64, float64) {
-	dx := endX - startX
-	dy := endY - startY
-	return startX + dx*t, startY + dy*t
 }
